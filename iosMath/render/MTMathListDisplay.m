@@ -92,6 +92,7 @@ static BOOL isIos6Supported() {
         self.attributedString = attrString;
         self.range = range;
         _atoms = atoms;
+        _frame = CGRectZero;
         // We can't use typographic bounds here as the ascent and descent returned are for the font and not for the line.
         self.width = CTLineGetTypographicBounds(_line, NULL, NULL, NULL);
         if (isIos6Supported()) {
@@ -158,6 +159,14 @@ static BOOL isIos6Supported() {
     
     CGContextSetTextPosition(context, self.position.x, self.position.y);
     CTLineDraw(_line, context);
+
+    // Update final position of display in base view coordinates
+    CGAffineTransform ctm = CGContextGetCTM(context);
+    
+    _frame = CGRectMake(ctm.tx/2 + self.position.x,
+                        ctm.ty/2 + self.position.y - self.descent,
+                        [self displayBounds].size.width,
+                        [self displayBounds].size.height);
     
     CGContextRestoreGState(context);
 }

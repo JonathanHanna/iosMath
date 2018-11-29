@@ -60,6 +60,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)init NS_UNAVAILABLE;
 
+/// The frame rect of the display in the base view coordiantes
+@property (nonatomic, readonly) CGRect frame;
 /// The CTLine being displayed
 @property (nonatomic, readonly) CTLineRef line;
 /// The attributed string used to generate the CTLineRef. Note setting this does not reset the dimensions of
